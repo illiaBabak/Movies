@@ -1,3 +1,3 @@
-export const App =(): JSX.Element => {
-  return <div>test</div>
-}
+export const App = (): JSX.Element => {
+  return <div></div>;
+};
