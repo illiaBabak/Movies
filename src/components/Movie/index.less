@@ -1,0 +1,58 @@
+.movie-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 220px;
+  height: 370px;
+  text-align: center;
+  border: 3px solid #272727;
+  border-radius: 6px;
+  padding: 2px 8px 2px 8px;
+  margin: 8px;
+
+  .movie-poster {
+    width: 160px;
+    height: 240px;
+    object-fit: cover;
+  }
+
+  .movie-title {
+    width: 100%;
+    height: 18px;
+    margin: 8px 0 8px 0;
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+
+    .card-genres {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      gap: 4px;
+      width: 100%;
+    }
+
+    .movie-vote-row {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+
+      img {
+        width: 20px;
+        height: 20px;
+        object-fit: cover;
+      }
+    }
+
+    p {
+      margin: 4px 0 4px 0;
+      font-size: 14px;
+    }
+  }
+}
