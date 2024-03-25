@@ -13,7 +13,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
   return (
     <div className='movie-card'>
       <img src={`http://image.tmdb.org/t/p/original${movie.poster_path}`} alt='poster' className='movie-poster' />
-      <h3 className='movie-title'>{movie.original_title}</h3>
+      <h4 className='movie-title'>{movie.original_title}</h4>
 
       <div className='card-info'>
         <div className='card-genres'>
