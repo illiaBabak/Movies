@@ -1,15 +1,22 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'src/root';
 
 export const Header = (): JSX.Element => {
   const { currentUser } = useContext(GlobalContext);
+  const navigate = useNavigate();
 
   return (
     <div className='header'>
       <h1 className='title'>Movies</h1>
 
       <div className='header-list'>
-        <div className='movies-btn'>Movies</div>
+        <div className='home-btn' onClick={() => navigate('/home')}>
+          Home
+        </div>
+        <div className='movies-btn' onClick={() => navigate('/movies')}>
+          Movies
+        </div>
         <div className='list-btn'>My list</div>
         <div className='search'>
           <input className='header-search' />

@@ -1,22 +1,27 @@
 import { createContext, useEffect, useState } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { fetchGenres } from 'src/api/fetchGenres';
 import { fetchPopular } from 'src/api/fetchPopular';
 import { fetchTopRated } from 'src/api/fetchTopRated';
 import { fetchUpcoming } from 'src/api/fetchUpcoming';
-import { Footer } from 'src/components/Footer';
-import { Header } from 'src/components/Header';
-import { PreviewMovie } from 'src/components/PreviewMovie';
-import { Section } from 'src/components/Section';
+import { HomePage } from 'src/pages/HomePage';
+import { MoviePage } from 'src/pages/MoviePage';
 import { GenreType, MovieType } from 'src/types/types';
 
 type GlobalContextType = {
   currentUser: boolean;
   genres: GenreType[];
+  popularMovies: MovieType[];
+  topRatedMovies: MovieType[];
+  upcomingMovies: MovieType[];
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
   currentUser: false,
   genres: [],
+  popularMovies: [],
+  topRatedMovies: [],
+  upcomingMovies: [],
 });
 
 export const App = (): JSX.Element => {
@@ -44,26 +49,15 @@ export const App = (): JSX.Element => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ currentUser, genres }}>
+    <GlobalContext.Provider value={{ currentUser, genres, popularMovies, topRatedMovies, upcomingMovies }}>
       <div className='container'>
-        <Header />
-        {popularMovies.length ? <PreviewMovie movie={popularMovies[3]} /> : <div>Loading...</div>}
-        {popularMovies.length ? (
-          <Section title='Popular films' movies={popularMovies.slice(0, 6)} />
-        ) : (
-          <div>Loading...</div>
-        )}
-        {topRatedMovies.length ? (
-          <Section title='Top rated films' movies={topRatedMovies.slice(0, 6)} />
-        ) : (
-          <div>Loading...</div>
-        )}
-        {upcomingMovies.length ? (
-          <Section title='Upcoming films' movies={upcomingMovies.slice(0, 6)} />
-        ) : (
-          <div>Loading...</div>
-        )}
-        <Footer />
+        <BrowserRouter>
+          <Routes>
+            <Route path='/*' element={<Navigate to='/home' />} />
+            <Route path='/home' element={<HomePage />} />
+            <Route path='/movies' element={<MoviePage />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </GlobalContext.Provider>
   );
