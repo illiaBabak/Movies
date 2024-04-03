@@ -11,7 +11,7 @@ export const HomePage = (): JSX.Element => {
   return (
     <div className='home-page'>
       <Header />
-      {popularMovies.length ? <PreviewMovie movie={popularMovies[3]} /> : <div>Loading...</div>}
+      {popularMovies.length ? <PreviewMovie movie={popularMovies[0]} /> : <div>Loading...</div>}
       {popularMovies.length ? (
         <Section title='Popular films' movies={popularMovies.slice(0, 6)} />
       ) : (

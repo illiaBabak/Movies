@@ -5,6 +5,7 @@ import { fetchPopular } from 'src/api/fetchPopular';
 import { fetchTopRated } from 'src/api/fetchTopRated';
 import { fetchUpcoming } from 'src/api/fetchUpcoming';
 import { HomePage } from 'src/pages/HomePage';
+import { LoginPage } from 'src/pages/LoginPage';
 import { MoviePage } from 'src/pages/MoviePage';
 import { GenreType, MovieType } from 'src/types/types';
 
@@ -56,6 +57,7 @@ export const App = (): JSX.Element => {
             <Route path='/*' element={<Navigate to='/home' />} />
             <Route path='/home' element={<HomePage />} />
             <Route path='/movies' element={<MoviePage />} />
+            <Route path='/login' element={<LoginPage />} />
           </Routes>
         </BrowserRouter>
       </div>

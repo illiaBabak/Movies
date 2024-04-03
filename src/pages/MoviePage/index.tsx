@@ -7,7 +7,7 @@ import { MovieType } from 'src/types/types';
 
 export const MoviePage = (): JSX.Element => {
   const [movies, setMovies] = useState<MovieType[]>([]);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
   const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {

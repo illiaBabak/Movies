@@ -17,13 +17,19 @@ export const Header = (): JSX.Element => {
         <div className='movies-btn' onClick={() => navigate('/movies')}>
           Movies
         </div>
-        <div className='list-btn'>My list</div>
+        <div className='list-btn' onClick={currentUser ? () => {} : () => navigate('/login')}>
+          My list
+        </div>
         <div className='search'>
           <input className='header-search' />
           <img src='https://static.vecteezy.com/system/resources/thumbnails/014/441/308/small_2x/magnifying-glass-icon-3d-design-for-application-and-website-presentation-png.png' />
         </div>
         <div className='user-btn'>
-          {currentUser ? <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' /> : <div>Sign in</div>}
+          {currentUser ? (
+            <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
+          ) : (
+            <div onClick={() => navigate('/login')}>Sign in</div>
+          )}
         </div>
       </div>
     </div>
