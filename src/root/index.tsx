@@ -7,10 +7,14 @@ import { fetchUpcoming } from 'src/api/fetchUpcoming';
 import { HomePage } from 'src/pages/HomePage';
 import { LoginPage } from 'src/pages/LoginPage';
 import { MoviePage } from 'src/pages/MoviePage';
-import { GenreType, MovieType } from 'src/types/types';
+import { MyListPage } from 'src/pages/MyListPage';
+import { UserPage } from 'src/pages/UserPage';
+import { GenreType, MovieType, UserData } from 'src/types/types';
+import { isUserData } from 'src/utils/guards';
 
 type GlobalContextType = {
-  currentUser: boolean;
+  currentUser: UserData | null;
+  setCurrentUser: React.Dispatch<React.SetStateAction<UserData | null>>;
   genres: GenreType[];
   popularMovies: MovieType[];
   topRatedMovies: MovieType[];
@@ -18,19 +22,30 @@ type GlobalContextType = {
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
-  currentUser: false,
+  currentUser: null,
+  setCurrentUser: () => {
+    throw new Error('Global context is not initialized');
+  },
   genres: [],
   popularMovies: [],
   topRatedMovies: [],
   upcomingMovies: [],
 });
 
+const getCurrentUser = (): UserData | null => {
+  const userSessionStorage = sessionStorage.getItem('current-user');
+  const userData: unknown = userSessionStorage ? JSON.parse(userSessionStorage) : '';
+  const parsedUser = isUserData(userData) ? userData : null;
+
+  return parsedUser;
+};
+
 export const App = (): JSX.Element => {
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
   const [topRatedMovies, setTopRatedMovies] = useState<MovieType[]>([]);
   const [upcomingMovies, setUpcomingMovies] = useState<MovieType[]>([]);
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState<UserData | null>(getCurrentUser());
 
   useEffect(() => {
     const loadData = async () => {
@@ -50,7 +65,9 @@ export const App = (): JSX.Element => {
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ currentUser, genres, popularMovies, topRatedMovies, upcomingMovies }}>
+    <GlobalContext.Provider
+      value={{ currentUser, genres, popularMovies, topRatedMovies, upcomingMovies, setCurrentUser }}
+    >
       <div className='container'>
         <BrowserRouter>
           <Routes>
@@ -58,6 +75,8 @@ export const App = (): JSX.Element => {
             <Route path='/home' element={<HomePage />} />
             <Route path='/movies' element={<MoviePage />} />
             <Route path='/login' element={<LoginPage />} />
+            <Route path='/user' element={<UserPage />} />
+            <Route path='/my-list' element={<MyListPage />} />
           </Routes>
         </BrowserRouter>
       </div>

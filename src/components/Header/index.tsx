@@ -1,9 +1,10 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'src/root';
 
 export const Header = (): JSX.Element => {
   const { currentUser } = useContext(GlobalContext);
+  const [isPfp, setIsPfp] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -17,7 +18,7 @@ export const Header = (): JSX.Element => {
         <div className='movies-btn' onClick={() => navigate('/movies')}>
           Movies
         </div>
-        <div className='list-btn' onClick={currentUser ? () => {} : () => navigate('/login')}>
+        <div className='list-btn' onClick={currentUser ? () => navigate('/my-list') : () => navigate('/login')}>
           My list
         </div>
         <div className='search'>
@@ -26,7 +27,15 @@ export const Header = (): JSX.Element => {
         </div>
         <div className='user-btn'>
           {currentUser ? (
-            <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' />
+            currentUser.profilePicture ? (
+              <img
+                src={isPfp ? 'https://cdn-icons-png.flaticon.com/512/149/149071.png' : currentUser?.profilePicture}
+                onError={() => setIsPfp(true)}
+                onClick={() => navigate('/user')}
+              />
+            ) : (
+              <img src='https://cdn-icons-png.flaticon.com/512/149/149071.png' onClick={() => navigate('/user')} />
+            )
           ) : (
             <div onClick={() => navigate('/login')}>Sign in</div>
           )}

@@ -17,3 +17,10 @@ export type GenreType = {
   id: number;
   name: string;
 };
+
+export type UserData = {
+  username: string;
+  password: string;
+  location: string;
+  profilePicture: string;
+};

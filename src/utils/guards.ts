@@ -1,4 +1,4 @@
-import { GenreType, MovieType } from 'src/types/types';
+import { GenreType, MovieType, UserData } from 'src/types/types';
 
 const isMovieType = (data: unknown): data is MovieType => {
   return (
@@ -49,4 +49,23 @@ const isGenre = (data: unknown): data is GenreType => {
 
 export const isGenreArr = (data: unknown): data is GenreType[] => {
   return Array.isArray(data) && data.every((el) => isGenre(el));
+};
+
+export const isUserData = (data: unknown): data is UserData => {
+  return (
+    !!data &&
+    typeof data === 'object' &&
+    'username' in data &&
+    'password' in data &&
+    'location' in data &&
+    'profilePicture' in data &&
+    typeof data.username === 'string' &&
+    typeof data.password === 'string' &&
+    typeof data.profilePicture === 'string' &&
+    typeof data.location === 'string'
+  );
+};
+
+export const isUserDataArr = (data: unknown): data is UserData[] => {
+  return Array.isArray(data) && data.every((el) => isUserData(el));
 };
