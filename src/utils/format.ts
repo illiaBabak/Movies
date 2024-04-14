@@ -1,17 +1,4 @@
-const MONTHS = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+import { MONTHS } from './constants';
 
 export const roundVote = (num: number): number => Math.round((num + Number.EPSILON) * 100) / 100;
 
