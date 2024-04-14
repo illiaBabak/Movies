@@ -59,10 +59,14 @@ export const isUserData = (data: unknown): data is UserData => {
     'password' in data &&
     'location' in data &&
     'profilePicture' in data &&
+    'created_date' in data &&
+    'id' in data &&
+    typeof data.id === 'number' &&
     typeof data.username === 'string' &&
     typeof data.password === 'string' &&
     typeof data.profilePicture === 'string' &&
-    typeof data.location === 'string'
+    typeof data.location === 'string' &&
+    typeof data.created_date === 'string'
   );
 };
 

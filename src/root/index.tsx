@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { fetchGenres } from 'src/api/fetchGenres';
 import { fetchPopular } from 'src/api/fetchPopular';
 import { fetchTopRated } from 'src/api/fetchTopRated';
@@ -69,7 +69,7 @@ export const App = (): JSX.Element => {
       value={{ currentUser, genres, popularMovies, topRatedMovies, upcomingMovies, setCurrentUser }}
     >
       <div className='container'>
-        <BrowserRouter>
+        <Router>
           <Routes>
             <Route path='/*' element={<Navigate to='/home' />} />
             <Route path='/home' element={<HomePage />} />
@@ -78,7 +78,7 @@ export const App = (): JSX.Element => {
             <Route path='/user' element={<UserPage />} />
             <Route path='/my-list' element={<MyListPage />} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </div>
     </GlobalContext.Provider>
   );

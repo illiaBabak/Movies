@@ -61,7 +61,7 @@ export const LoginWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
             <h1 className='login-window-title'>Sign in</h1>
 
             <div className='login-input-label'>
-              <p>User name</p>
+              <p>Username</p>
               <input
                 type='text'
                 className='login-input'

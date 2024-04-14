@@ -3,6 +3,7 @@ import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocomplet
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'src/components/Alert';
 import { GlobalContext } from 'src/root';
+import { getCurrentDate } from 'src/utils/getCurrentDate';
 import { getUsers } from 'src/utils/getUsers';
 
 const apiKey = 'AIzaSyADtDVmDwsAktE9k8TKx9mlHxyT9NB73UQ';
@@ -87,9 +88,9 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
   };
 
   const saveUser = () => {
-    const userInfo = { ...inputValues, location };
-
     const users = getUsers();
+
+    const userInfo = { ...inputValues, location, created_date: getCurrentDate(), id: users.length };
 
     if (users.some((user) => user.username === userInfo.username)) {
       setShouldShowAlert(true);
