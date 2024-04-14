@@ -10,7 +10,7 @@ import { MoviePage } from 'src/pages/MoviePage';
 import { MyListPage } from 'src/pages/MyListPage';
 import { UserPage } from 'src/pages/UserPage';
 import { GenreType, MovieType, UserData } from 'src/types/types';
-import { isUserData } from 'src/utils/guards';
+import { getCurrentUser } from 'src/utils/getCurrentUser';
 
 type GlobalContextType = {
   currentUser: UserData | null;
@@ -31,14 +31,6 @@ export const GlobalContext = createContext<GlobalContextType>({
   topRatedMovies: [],
   upcomingMovies: [],
 });
-
-const getCurrentUser = (): UserData | null => {
-  const userSessionStorage = sessionStorage.getItem('current-user');
-  const userData: unknown = userSessionStorage ? JSON.parse(userSessionStorage) : '';
-  const parsedUser = isUserData(userData) ? userData : null;
-
-  return parsedUser;
-};
 
 export const App = (): JSX.Element => {
   const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);

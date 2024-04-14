@@ -21,13 +21,18 @@ export const Movie = ({ movie }: Props): JSX.Element => {
             if (index >= 2) return;
 
             const genre = genres.find((el) => el.id === id)?.name;
-            return <p key={`genre-${id}`}>{`${genre ?? ''}${index < 1 ? ',' : ''}`}</p>;
+            return (
+              <p
+                className='movie-genre'
+                key={`genre-${id}`}
+              >{`${genre ?? ''}${index == 0 && movie.genre_ids.length !== 1 ? ',' : ''}`}</p>
+            );
           })}
         </div>
 
         <div className='movie-vote-row'>
-          <img src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
-          <p>{roundVote(movie.vote_average)}</p>
+          <img className='movie-vote-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
+          <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
         </div>
       </div>
     </div>
