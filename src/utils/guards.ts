@@ -1,4 +1,4 @@
-import { GenreType, MovieType, UserData } from 'src/types/types';
+import { GenreType, MovieType, UserData, FavouritesList } from 'src/types/types';
 
 const isObj = (data: unknown): data is object => !!data && typeof data === 'object';
 
@@ -83,4 +83,12 @@ export const isUserData = (data: unknown): data is UserData => {
 
 export const isUserDataArr = (data: unknown): data is UserData[] => {
   return Array.isArray(data) && data.every((el) => isUserData(el));
+};
+
+const isFavourite = (data: unknown): data is FavouritesList => {
+  return isObj(data) && 'userId' in data && isNumber(data.userId) && 'movies' in data && isMovieArr(data.movies);
+};
+
+export const isFavourites = (data: unknown): data is FavouritesList[] => {
+  return Array.isArray(data) && data.every((el) => isFavourite(el));
 };

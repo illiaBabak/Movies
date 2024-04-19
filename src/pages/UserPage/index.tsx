@@ -167,11 +167,11 @@ export const UserPage = (): JSX.Element => {
 
                   setCurrentUserStorage(currentUser);
 
-                  const uptadedUsers = getUsers().filter((user) => user.id !== currentUser.id);
+                  const updatedUsers = getUsers().filter((user) => user.id !== currentUser.id);
 
-                  uptadedUsers.push(currentUser);
+                  updatedUsers.push(currentUser);
 
-                  localStorage.setItem('users', JSON.stringify(uptadedUsers));
+                  localStorage.setItem('users', JSON.stringify(updatedUsers));
                 }}
               >
                 Save

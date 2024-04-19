@@ -1,14 +1,37 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'src/root';
 import { MovieType } from 'src/types/types';
 import { roundVote } from 'src/utils/format';
+import { getFavourites } from 'src/utils/getFavouritesMovies';
 
 type Props = {
   movie: MovieType;
 };
 
 export const Movie = ({ movie }: Props): JSX.Element => {
-  const { genres } = useContext(GlobalContext);
+  const { genres, currentUser } = useContext(GlobalContext);
+  const [favouritesMovies, setFavouritesMovies] = useState<MovieType[]>([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      const favourites = getFavourites();
+      const favouritesMoviesCurrentUser = favourites[currentUser?.id ?? 0].movies;
+      setFavouritesMovies(favouritesMoviesCurrentUser);
+    } else setFavouritesMovies([]);
+  }, [currentUser]);
+
+  const addMovieToList = () => {
+    const favourites = getFavourites();
+    const favouritesCurrentUser = favourites[currentUser?.id ?? 0];
+
+    favouritesCurrentUser.movies.push(movie);
+    setFavouritesMovies(favouritesCurrentUser.movies);
+
+    const updatedFavourites = favourites.filter((favourite) => favourite.userId !== favouritesCurrentUser.userId);
+    localStorage.setItem('favourites', JSON.stringify([...updatedFavourites, favouritesCurrentUser]));
+  };
 
   return (
     <div className='movie-card'>
@@ -33,6 +56,16 @@ export const Movie = ({ movie }: Props): JSX.Element => {
         <div className='movie-vote-row'>
           <img className='movie-vote-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
           <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
+          <div className='add-list-btn' onClick={currentUser ? () => addMovieToList() : () => navigate('/login')}>
+            <img
+              className='heart-icon'
+              src={
+                favouritesMovies.some((fav) => fav.id === movie.id)
+                  ? 'https://cdn-icons-png.freepik.com/256/9484/9484251.png?semt=ais_hybrid'
+                  : 'https://static-00.iconduck.com/assets.00/heart-icon-512x441-zviestnn.png'
+              }
+            />
+          </div>
         </div>
       </div>
     </div>

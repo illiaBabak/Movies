@@ -26,3 +26,8 @@ export type UserData = {
   profilePicture: string;
   created_date: string;
 };
+
+export type FavouritesList = {
+  userId: number;
+  movies: MovieType[];
+};

@@ -5,6 +5,7 @@ import { Alert } from 'src/components/Alert';
 import { GlobalContext } from 'src/root';
 import { apiKey } from 'src/utils/constants';
 import { getCurrentDate } from 'src/utils/getCurrentDate';
+import { getFavourites } from 'src/utils/getFavouritesMovies';
 import { getUsers } from 'src/utils/getUsers';
 import { parsePlaces } from 'src/utils/parsePlaces';
 import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
@@ -78,6 +79,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
 
   const saveUser = () => {
     const users = getUsers();
+    const favourites = getFavourites();
 
     const userInfo = { ...inputValues, location, created_date: getCurrentDate(), id: users.length };
 
@@ -86,6 +88,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
       return;
     }
 
+    localStorage.setItem('favourites', JSON.stringify([...favourites, { movies: [], userId: userInfo.id }]));
     localStorage.setItem('users', JSON.stringify([...users, userInfo]));
     setCurrentUserStorage(userInfo);
 

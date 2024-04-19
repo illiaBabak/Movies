@@ -4,7 +4,7 @@
   justify-content: space-around;
   align-items: center;
   width: 220px;
-  height: 390px;
+  height: 415px;
   text-align: center;
   border: 3px solid #272727;
   border-radius: 6px;
@@ -25,7 +25,7 @@
 
   .card-info {
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     align-items: center;
     justify-content: space-around;
     width: 100%;
@@ -47,6 +47,7 @@
       display: flex;
       align-items: center;
       flex-direction: row;
+      margin-left: 8px;
 
       .movie-vote-img {
         width: 20px;
@@ -57,6 +58,29 @@
       .movie-vote {
         margin: 4px 0 4px 0;
         font-size: 14px;
+      }
+
+      .add-list-btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 25px;
+        height: 25px;
+        padding: 2px;
+        margin: 4px;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.05);
+          transition: 0.25s;
+        }
+
+        .heart-icon {
+          width: 20px;
+          height: 20px;
+          object-fit: contain;
+        }
       }
     }
   }
