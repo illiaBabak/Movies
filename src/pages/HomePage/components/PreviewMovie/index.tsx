@@ -20,18 +20,19 @@ export const PreviewMovie = ({ movie }: Props): JSX.Element => {
         </div>
 
         <div className='right-col'>
-          <h1>{movie.original_title}</h1>
+          <h1 className='movie-title'>{movie.original_title}</h1>
 
           <div className='preview-genre-list'>
             {movie.genre_ids.map((id, index) => {
               const genre = genres.find((el) => el.id === id)?.name;
+
               return <p key={`genre-${id}`}>{`${genre ?? ''}${index < movie.genre_ids.length - 1 ? ',' : ''}`}</p>;
             })}
           </div>
 
           <div className='vote-row'>
-            <img src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
-            <p>{roundVote(movie.vote_average)}</p>
+            <img className='vote-star-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
+            <p className='vote'>{roundVote(movie.vote_average)}</p>
           </div>
 
           <p className='preview-overview'>{movie.overview}</p>

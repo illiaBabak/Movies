@@ -5,20 +5,9 @@ import { Header } from 'src/components/Header';
 import { GlobalContext } from 'src/root';
 import { getUsers } from 'src/utils/getUsers';
 import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
-
-const apiKey = 'AIzaSyADtDVmDwsAktE9k8TKx9mlHxyT9NB73UQ';
-
-const parseData = (placeDetails: google.maps.places.PlaceResult) => {
-  const { address_components } = placeDetails ?? {};
-
-  if (address_components && address_components.length > 0) {
-    const longNames = address_components.map((item) => item.long_name);
-
-    return longNames.join(' ');
-  }
-
-  return '';
-};
+import { apiKey } from 'src/utils/constants';
+import { parsePlaces } from 'src/utils/parsePlaces';
+import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 
 export const UserPage = (): JSX.Element => {
   const { placesService, placePredictions, getPlacePredictions } = usePlacesService({
@@ -57,7 +46,7 @@ export const UserPage = (): JSX.Element => {
 
           return {
             ...prev,
-            location: parseData(placeDetails),
+            location: parsePlaces(placeDetails),
           };
         });
         getPlacePredictions({ input: '' });
@@ -176,7 +165,7 @@ export const UserPage = (): JSX.Element => {
 
                   if (!currentUser) return;
 
-                  sessionStorage.setItem('current-user', JSON.stringify(currentUser));
+                  setCurrentUserStorage(currentUser);
 
                   const uptadedUsers = getUsers().filter((user) => user.id !== currentUser.id);
 
@@ -194,7 +183,7 @@ export const UserPage = (): JSX.Element => {
             <div
               onClick={() => {
                 setCurrentUser(null);
-                sessionStorage.setItem('current-user', JSON.stringify(''));
+                setCurrentUserStorage('');
                 navigate('/home');
               }}
             >

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'src/root';
 import { getUsers } from 'src/utils/getUsers';
 import { Alert } from '../../../../components/Alert';
+import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 
 type Props = {
   setShouldCreateUser: React.Dispatch<React.SetStateAction<boolean>>;
@@ -39,7 +40,7 @@ export const LoginWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
     }
 
     setCurrentUser(loginUser);
-    sessionStorage.setItem('current-user', JSON.stringify(loginUser));
+    setCurrentUserStorage(loginUser);
 
     navigate('/user');
   };

@@ -3,25 +3,14 @@ import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocomplet
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'src/components/Alert';
 import { GlobalContext } from 'src/root';
+import { apiKey } from 'src/utils/constants';
 import { getCurrentDate } from 'src/utils/getCurrentDate';
 import { getUsers } from 'src/utils/getUsers';
-
-const apiKey = 'AIzaSyADtDVmDwsAktE9k8TKx9mlHxyT9NB73UQ';
+import { parsePlaces } from 'src/utils/parsePlaces';
+import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 
 type Props = {
   setShouldCreateUser: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const parseData = (placeDetails: google.maps.places.PlaceResult) => {
-  const { address_components } = placeDetails ?? {};
-
-  if (address_components && address_components.length > 0) {
-    const longNames = address_components.map((item) => item.long_name);
-
-    return longNames.join(' ');
-  }
-
-  return '';
 };
 
 export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
@@ -69,7 +58,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
       (placeDetails) => {
         if (!placeDetails) return;
 
-        setLocation(parseData(placeDetails));
+        setLocation(parsePlaces(placeDetails));
         getPlacePredictions({ input: '' });
       }
     );
@@ -98,7 +87,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
     }
 
     localStorage.setItem('users', JSON.stringify([...users, userInfo]));
-    sessionStorage.setItem('current-user', JSON.stringify(userInfo));
+    setCurrentUserStorage(userInfo);
 
     clearWindow();
 
