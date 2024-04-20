@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from 'src/root';
-import { MovieType } from 'src/types/types';
+import { FavouritesList, MovieType } from 'src/types/types';
 import { roundVote } from 'src/utils/format';
 import { getFavourites } from 'src/utils/getFavouritesMovies';
 
@@ -17,13 +17,16 @@ export const Movie = ({ movie }: Props): JSX.Element => {
   useEffect(() => {
     if (currentUser) {
       const favourites = getFavourites();
-      const favouritesMoviesCurrentUser = favourites[currentUser?.id ?? 0].movies;
+
+      const favouritesMoviesCurrentUser = favourites[currentUser.id].movies;
+
       setFavouritesMovies(favouritesMoviesCurrentUser);
     } else setFavouritesMovies([]);
   }, [currentUser]);
 
   const addMovieToList = () => {
     const favourites = getFavourites();
+
     const favouritesCurrentUser = favourites[currentUser?.id ?? 0];
 
     favouritesCurrentUser.movies.push(movie);
@@ -31,6 +34,25 @@ export const Movie = ({ movie }: Props): JSX.Element => {
 
     const updatedFavourites = favourites.filter((favourite) => favourite.userId !== favouritesCurrentUser.userId);
     localStorage.setItem('favourites', JSON.stringify([...updatedFavourites, favouritesCurrentUser]));
+  };
+
+  const removeFromList = () => {
+    const favourites = getFavourites();
+    const favouritesCurrentUser = favourites[currentUser?.id ?? 0];
+
+    const updatedFavouritesCurrentUser: FavouritesList = {
+      userId: favouritesCurrentUser.userId,
+      movies: favouritesCurrentUser.movies.filter((el) => el.id !== movie.id),
+    };
+
+    setFavouritesMovies(updatedFavouritesCurrentUser.movies);
+    localStorage.setItem(
+      'favourites',
+      JSON.stringify([
+        ...favourites.filter((fav) => fav.userId !== favouritesCurrentUser.userId),
+        updatedFavouritesCurrentUser,
+      ])
+    );
   };
 
   return (
@@ -52,11 +74,20 @@ export const Movie = ({ movie }: Props): JSX.Element => {
             );
           })}
         </div>
-
+        x
         <div className='movie-vote-row'>
           <img className='movie-vote-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
           <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
-          <div className='add-list-btn' onClick={currentUser ? () => addMovieToList() : () => navigate('/login')}>
+          <div
+            className='add-list-btn'
+            onClick={
+              currentUser
+                ? favouritesMovies.some((fav) => fav.id === movie.id)
+                  ? () => removeFromList()
+                  : () => addMovieToList()
+                : () => navigate('/login')
+            }
+          >
             <img
               className='heart-icon'
               src={

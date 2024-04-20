@@ -1,3 +1,6 @@
+@footer-height: 165px;
+@header-height: 121px;
+
 .my-list-page {
   display: flex;
   flex-direction: column;
@@ -5,4 +8,22 @@
   align-items: center;
   color: white;
   width: 100%;
+
+  .my-list-content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100vh - @footer-height - @header-height);
+
+    .my-list-movies {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      width: 100%;
+    }
+  }
 }
