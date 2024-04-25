@@ -1,3 +1,4 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { GenreType } from 'src/types/types';
 import { isGenreArr } from 'src/utils/guards';
@@ -19,7 +20,7 @@ const options = {
   },
 };
 
-export const fetchGenres = async (): Promise<GenreType[]> => {
+const fetchGenres = async (): Promise<GenreType[]> => {
   try {
     const response: AxiosResponse<ResponseType> = await axios.request(options);
     const genresArr = Object.values(response.data)[0];
@@ -28,4 +29,13 @@ export const fetchGenres = async (): Promise<GenreType[]> => {
   } catch {
     throw new Error('Something went wrong with API (genres)');
   }
+};
+
+export const useGenresQuery = (): UseQueryResult<GenreType[]> => {
+  return useQuery({
+    queryKey: ['genres'],
+    queryFn: async () => {
+      return await fetchGenres();
+    },
+  });
 };

@@ -1,9 +1,9 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import { fetchGenres } from 'src/api/fetchGenres';
-import { fetchPopular } from 'src/api/fetchPopular';
-import { fetchTopRated } from 'src/api/fetchTopRated';
-import { fetchUpcoming } from 'src/api/fetchUpcoming';
+import { useGenresQuery } from 'src/api/fetchGenres';
+import { usePopularMoviesInfiniteQuery } from 'src/api/fetchPopular';
+import { useTopRatedMoviesQuery } from 'src/api/fetchTopRated';
+import { useUpComingMoviesQuery } from 'src/api/fetchUpcoming';
 import { HomePage } from 'src/pages/HomePage';
 import { LoginPage } from 'src/pages/LoginPage';
 import { MoviePage } from 'src/pages/MoviePage';
@@ -15,10 +15,10 @@ import { getCurrentUser } from 'src/utils/getCurrentUser';
 type GlobalContextType = {
   currentUser: UserData | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<UserData | null>>;
-  genres: GenreType[];
-  popularMovies: MovieType[];
-  topRatedMovies: MovieType[];
-  upcomingMovies: MovieType[];
+  genres: GenreType[] | undefined;
+  popularMovies: MovieType[] | undefined;
+  topRatedMovies: MovieType[] | undefined;
+  upcomingMovies: MovieType[] | undefined;
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -33,28 +33,13 @@ export const GlobalContext = createContext<GlobalContextType>({
 });
 
 export const App = (): JSX.Element => {
-  const [popularMovies, setPopularMovies] = useState<MovieType[]>([]);
-  const [topRatedMovies, setTopRatedMovies] = useState<MovieType[]>([]);
-  const [upcomingMovies, setUpcomingMovies] = useState<MovieType[]>([]);
-  const [genres, setGenres] = useState<GenreType[]>([]);
+  const { data: popularMoviesResponse } = usePopularMoviesInfiniteQuery();
+  const { data: topRatedMovies } = useTopRatedMoviesQuery();
+  const { data: upcomingMovies } = useUpComingMoviesQuery();
+  const { data: genres } = useGenresQuery();
   const [currentUser, setCurrentUser] = useState<UserData | null>(getCurrentUser());
 
-  useEffect(() => {
-    const loadData = async () => {
-      const popularFlims = await fetchPopular();
-      setPopularMovies(popularFlims);
-
-      const genres = await fetchGenres();
-      setGenres(genres);
-
-      const ratedMovies = await fetchTopRated();
-      setTopRatedMovies(ratedMovies);
-
-      const upcomingMovies = await fetchUpcoming();
-      setUpcomingMovies(upcomingMovies);
-    };
-    loadData();
-  }, []);
+  const popularMovies = popularMoviesResponse?.pages.flatMap((el) => el.results);
 
   return (
     <GlobalContext.Provider

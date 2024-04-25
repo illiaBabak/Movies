@@ -1,3 +1,4 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
@@ -20,7 +21,7 @@ const options = {
   },
 };
 
-export const fetchTopRated = async (): Promise<MovieType[]> => {
+const fetchTopRated = async (): Promise<MovieType[]> => {
   try {
     const response: AxiosResponse<ResponseType> = await axios.request(options);
 
@@ -28,4 +29,13 @@ export const fetchTopRated = async (): Promise<MovieType[]> => {
   } catch {
     throw new Error('Something went wrong with request (Top rated films)');
   }
+};
+
+export const useTopRatedMoviesQuery = (): UseQueryResult<MovieType[]> => {
+  return useQuery({
+    queryKey: ['top_rated_movies'],
+    queryFn: async () => {
+      return await fetchTopRated();
+    },
+  });
 };

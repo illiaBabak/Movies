@@ -24,7 +24,7 @@ export const PreviewMovie = ({ movie }: Props): JSX.Element => {
 
           <div className='preview-genre-list'>
             {movie.genre_ids.map((id, index) => {
-              const genre = genres.find((el) => el.id === id)?.name;
+              const genre = genres?.find((el) => el.id === id)?.name;
 
               return <p key={`genre-${id}`}>{`${genre ?? ''}${index < movie.genre_ids.length - 1 ? ',' : ''}`}</p>;
             })}

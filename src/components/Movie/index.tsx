@@ -68,7 +68,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
             {movie.genre_ids.map((id, index) => {
               if (index >= 2) return;
 
-              const genre = genres.find((el) => el.id === id)?.name;
+              const genre = genres?.find((el) => el.id === id)?.name;
               return (
                 <p
                   className='movie-genre'

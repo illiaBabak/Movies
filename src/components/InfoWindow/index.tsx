@@ -36,7 +36,7 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
           <div className='genres-list'>
             <p>Genres: </p>
             {movie.genre_ids.map((id, index) => {
-              const genre = genres.find((el) => el.id === id)?.name;
+              const genre = genres?.find((el) => el.id === id)?.name;
 
               return (
                 <p

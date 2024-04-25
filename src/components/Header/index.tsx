@@ -16,7 +16,7 @@ export const Header = (): JSX.Element => {
           Home
         </div>
         <div className='movies-btn' onClick={() => navigate('/movies')}>
-          Movies
+          Popular
         </div>
         <div className='list-btn' onClick={currentUser ? () => navigate('/my-list') : () => navigate('/login')}>
           My list

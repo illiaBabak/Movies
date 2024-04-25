@@ -12,10 +12,10 @@ export const HomePage = (): JSX.Element => {
   return (
     <div className='home-page'>
       <Header />
-      {popularMovies.length ? <PreviewMovie movie={popularMovies[0]} /> : <Loader />}
-      {popularMovies.length ? <Section title='Popular films' movies={popularMovies.slice(0, 6)} /> : <Loader />}
-      {topRatedMovies.length ? <Section title='Top rated films' movies={topRatedMovies.slice(0, 6)} /> : <Loader />}
-      {upcomingMovies.length ? <Section title='Upcoming films' movies={upcomingMovies.slice(0, 6)} /> : <Loader />}
+      {popularMovies?.length ? <PreviewMovie movie={popularMovies[0]} /> : <Loader />}
+      {popularMovies?.length ? <Section title='Popular films' movies={popularMovies.slice(0, 6)} /> : <Loader />}
+      {topRatedMovies?.length ? <Section title='Top rated films' movies={topRatedMovies.slice(0, 6)} /> : <Loader />}
+      {upcomingMovies?.length ? <Section title='Upcoming films' movies={upcomingMovies.slice(0, 6)} /> : <Loader />}
       <Footer />
     </div>
   );

@@ -1,3 +1,4 @@
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
@@ -24,7 +25,7 @@ const options = {
   },
 };
 
-export const fetchUpcoming = async (): Promise<MovieType[]> => {
+const fetchUpcoming = async (): Promise<MovieType[]> => {
   try {
     const response: AxiosResponse<ResponseType> = await axios.request(options);
     const { results, dates } = response.data;
@@ -41,4 +42,13 @@ export const fetchUpcoming = async (): Promise<MovieType[]> => {
   } catch {
     throw new Error('Something went wrong with request (Upcoming films)');
   }
+};
+
+export const useUpComingMoviesQuery = (): UseQueryResult<MovieType[]> => {
+  return useQuery({
+    queryKey: ['up_coming_movies'],
+    queryFn: async () => {
+      return await fetchUpcoming();
+    },
+  });
 };

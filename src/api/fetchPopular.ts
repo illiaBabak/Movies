@@ -1,18 +1,23 @@
+import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
 
-type ResponseType = {
+type RequestType = {
   results: MovieType[];
 };
 
-export const fetchPopular = async (pageNumber?: number): Promise<MovieType[]> => {
+type ResponseType = {
+  pageNumber: number;
+} & RequestType;
+
+const fetchPopular = async (pageNumber: number): Promise<ResponseType> => {
   const options = {
     method: 'GET',
     url: 'https://api.themoviedb.org/3/movie/popular',
     params: {
       language: 'en-US',
-      page: pageNumber ?? 1,
+      page: pageNumber,
     },
     headers: {
       accept: 'application/json',
@@ -22,10 +27,28 @@ export const fetchPopular = async (pageNumber?: number): Promise<MovieType[]> =>
   };
 
   try {
-    const response: AxiosResponse<ResponseType> = await axios.request(options);
+    const response: AxiosResponse<RequestType> = await axios.request(options);
 
-    return isMovieArr(response.data.results) ? response.data.results : [];
+    return isMovieArr(response.data.results)
+      ? { results: response.data.results, pageNumber }
+      : { results: [], pageNumber };
   } catch {
     throw new Error('Something went wrong with request (Popular films)');
   }
+};
+
+export const usePopularMoviesInfiniteQuery = (): UseInfiniteQueryResult<
+  { pages: ResponseType[] } | undefined,
+  Error
+> => {
+  return useInfiniteQuery({
+    queryKey: ['popular_movies'],
+    queryFn: async ({ pageParam }) => {
+      return await fetchPopular(pageParam);
+    },
+    initialPageParam: 1,
+    getNextPageParam: (currentPage) => {
+      return currentPage.pageNumber + 1 ?? 1;
+    },
+  });
 };
