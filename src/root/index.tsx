@@ -1,9 +1,9 @@
 import { createContext, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import { useGenresQuery } from 'src/api/fetchGenres';
-import { usePopularMoviesInfiniteQuery } from 'src/api/fetchPopular';
-import { useTopRatedMoviesQuery } from 'src/api/fetchTopRated';
-import { useUpComingMoviesQuery } from 'src/api/fetchUpcoming';
+import { useGenresQuery } from 'src/api/genres';
+import { usePopularMoviesInfiniteQuery } from 'src/api/popularMovies';
+import { useTopRatedMoviesQuery } from 'src/api/topRatedMovies';
+import { useUpComingMoviesQuery } from 'src/api/upComingMovies';
 import { HomePage } from 'src/pages/HomePage';
 import { LoginPage } from 'src/pages/LoginPage';
 import { MoviePage } from 'src/pages/MoviePage';

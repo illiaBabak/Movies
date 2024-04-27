@@ -25,7 +25,7 @@ const hasFieldsMovie = (data: object): data is MovieType => {
   );
 };
 
-const isMovieType = (data: unknown): data is MovieType => {
+export const isMovieType = (data: unknown): data is MovieType => {
   return (
     isObj(data) &&
     hasFieldsMovie(data) &&

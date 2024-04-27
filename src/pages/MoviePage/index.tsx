@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { usePopularMoviesInfiniteQuery } from 'src/api/fetchPopular';
+import { usePopularMoviesInfiniteQuery } from 'src/api/popularMovies';
 import { Footer } from 'src/components/Footer';
 import { Header } from 'src/components/Header';
 import { Movie } from 'src/components/Movie';
