@@ -7,6 +7,7 @@ import { apiKey } from 'src/utils/constants';
 import { getCurrentDate } from 'src/utils/getCurrentDate';
 import { getFavourites } from 'src/utils/getFavouritesMovies';
 import { getUsers } from 'src/utils/getUsers';
+import { isString } from 'src/utils/guards';
 import { parsePlaces } from 'src/utils/parsePlaces';
 import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 
@@ -33,8 +34,16 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
     const { files } = e.currentTarget;
     if (!files) return;
 
-    const url = window.URL.createObjectURL(files[0]);
-    setInputValues((prev) => ({ ...prev, profilePicture: url }));
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64Image = e.target?.result;
+
+      if (isString(base64Image)) setInputValues((prev) => ({ ...prev, profilePicture: base64Image }));
+    };
+
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
   };
 
   const handleInput = (val: string, fieldName: string) => {
@@ -172,7 +181,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
         <div className='sign-in'>
           Already have an account?
           <span className='sign-in-btn' onClick={() => setShouldCreateUser(false)}>
-            Sign up
+            Sign in
           </span>
         </div>
       </div>

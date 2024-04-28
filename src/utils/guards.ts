@@ -4,7 +4,7 @@ const isObj = (data: unknown): data is object => !!data && typeof data === 'obje
 
 const isNumber = (data: unknown): data is number => typeof data === 'number';
 
-const isString = (data: unknown): data is string => typeof data === 'string';
+export const isString = (data: unknown): data is string => typeof data === 'string';
 
 const isBool = (data: unknown): data is boolean => typeof data === 'boolean';
 

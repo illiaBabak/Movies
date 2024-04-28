@@ -8,6 +8,7 @@ import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocomplet
 import { apiKey } from 'src/utils/constants';
 import { parsePlaces } from 'src/utils/parsePlaces';
 import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
+import { isString } from 'src/utils/guards';
 
 export const UserPage = (): JSX.Element => {
   const { placesService, placePredictions, getPlacePredictions } = usePlacesService({
@@ -24,15 +25,23 @@ export const UserPage = (): JSX.Element => {
     const { files } = e.currentTarget;
     if (!files) return;
 
-    const url = window.URL.createObjectURL(files[0]);
-    setCurrentUser((prev) => {
-      if (!prev) return prev;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const base64Image = e.target?.result;
+      if (isString(base64Image)) {
+        setCurrentUser((prev) => {
+          if (!prev) return prev;
+          return {
+            ...prev,
+            profilePicture: base64Image,
+          };
+        });
+      }
+    };
 
-      return {
-        ...prev,
-        profilePicture: url,
-      };
-    });
+    if (files[0]) {
+      reader.readAsDataURL(files[0]);
+    }
   };
 
   const handleSearch = (placeId: string) => {
