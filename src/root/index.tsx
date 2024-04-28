@@ -1,24 +1,18 @@
 import { createContext, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { useGenresQuery } from 'src/api/genres';
-import { usePopularMoviesInfiniteQuery } from 'src/api/popularMovies';
-import { useTopRatedMoviesQuery } from 'src/api/topRatedMovies';
-import { useUpComingMoviesQuery } from 'src/api/upComingMovies';
 import { HomePage } from 'src/pages/HomePage';
 import { LoginPage } from 'src/pages/LoginPage';
 import { MoviePage } from 'src/pages/MoviePage';
 import { MyListPage } from 'src/pages/MyListPage';
 import { UserPage } from 'src/pages/UserPage';
-import { GenreType, MovieType, UserData } from 'src/types/types';
+import { GenreType, UserData } from 'src/types/types';
 import { getCurrentUser } from 'src/utils/getCurrentUser';
 
 type GlobalContextType = {
   currentUser: UserData | null;
   setCurrentUser: React.Dispatch<React.SetStateAction<UserData | null>>;
   genres: GenreType[] | undefined;
-  popularMovies: MovieType[] | undefined;
-  topRatedMovies: MovieType[] | undefined;
-  upcomingMovies: MovieType[] | undefined;
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -27,24 +21,14 @@ export const GlobalContext = createContext<GlobalContextType>({
     throw new Error('Global context is not initialized');
   },
   genres: [],
-  popularMovies: [],
-  topRatedMovies: [],
-  upcomingMovies: [],
 });
 
 export const App = (): JSX.Element => {
-  const { data: popularMoviesResponse } = usePopularMoviesInfiniteQuery();
-  const { data: topRatedMovies } = useTopRatedMoviesQuery();
-  const { data: upcomingMovies } = useUpComingMoviesQuery();
   const { data: genres } = useGenresQuery();
   const [currentUser, setCurrentUser] = useState<UserData | null>(getCurrentUser());
 
-  const popularMovies = popularMoviesResponse?.pages.flatMap((el) => el.results);
-
   return (
-    <GlobalContext.Provider
-      value={{ currentUser, genres, popularMovies, topRatedMovies, upcomingMovies, setCurrentUser }}
-    >
+    <GlobalContext.Provider value={{ currentUser, genres, setCurrentUser }}>
       <div className='container'>
         <Router>
           <Routes>

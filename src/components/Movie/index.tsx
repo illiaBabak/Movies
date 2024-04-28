@@ -14,6 +14,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
   const { genres, currentUser } = useContext(GlobalContext);
   const [favouritesMovies, setFavouritesMovies] = useState<MovieType[]>([]);
   const [shouldShowInfo, setShouldShowInfo] = useState(false);
+  const [isLoadingIcon, setIsLoadingIcon] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -60,7 +61,16 @@ export const Movie = ({ movie }: Props): JSX.Element => {
   return (
     <>
       <div className='movie-card'>
-        <img src={`http://image.tmdb.org/t/p/original${movie.poster_path}`} alt='poster' className='movie-poster' />
+        <img
+          src={
+            isLoadingIcon
+              ? 'https://i.pinimg.com/originals/2e/60/07/2e60079f1e36b5c7681f0996a79e8af4.jpg'
+              : `http://image.tmdb.org/t/p/original${movie.poster_path}`
+          }
+          alt='poster'
+          className='movie-poster'
+          onLoad={() => setIsLoadingIcon(false)}
+        />
         <h4 className='movie-title'>{movie.original_title}</h4>
 
         <div className='card-info'>

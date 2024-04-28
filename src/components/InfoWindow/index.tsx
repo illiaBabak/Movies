@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { GlobalContext } from 'src/root';
 import { MovieType } from 'src/types/types';
 import { formatDateToWords, roundVote } from 'src/utils/format';
@@ -10,6 +10,8 @@ type Props = {
 
 export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => {
   const { genres } = useContext(GlobalContext);
+  const [isLoadingBack, setIsLoadingBack] = useState(true);
+  const [isLoadingIcon, setIsLoadingIcon] = useState(true);
 
   return (
     <div className='movie-info-wrapper' onClick={() => setShouldShowInfo(false)}>
@@ -21,13 +23,27 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
         }}
       >
         <img
-          src={`http://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+          src={
+            isLoadingBack
+              ? 'https://static.vecteezy.com/system/resources/thumbnails/008/174/698/original/animation-loading-circle-icon-loading-gif-loading-screen-gif-loading-spinner-gif-loading-animation-loading-on-black-background-free-video.jpg'
+              : `http://image.tmdb.org/t/p/original${movie.backdrop_path}`
+          }
           alt='background-img'
           className='background-img'
+          onLoad={() => setIsLoadingBack(false)}
         />
 
         <div className='left-col'>
-          <img className='info-poster' src={`http://image.tmdb.org/t/p/original${movie.poster_path}`} alt='movie_img' />
+          <img
+            className='info-poster'
+            src={
+              isLoadingIcon
+                ? 'https://i.pinimg.com/originals/2e/60/07/2e60079f1e36b5c7681f0996a79e8af4.jpg'
+                : `http://image.tmdb.org/t/p/original${movie.poster_path}`
+            }
+            alt='movie_img'
+            onLoad={() => setIsLoadingIcon(false)}
+          />
         </div>
 
         <div className='right-col'>

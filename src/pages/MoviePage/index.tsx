@@ -2,10 +2,11 @@ import { useRef } from 'react';
 import { usePopularMoviesInfiniteQuery } from 'src/api/popularMovies';
 import { Footer } from 'src/components/Footer';
 import { Header } from 'src/components/Header';
+import { Loader } from 'src/components/Loader';
 import { Movie } from 'src/components/Movie';
 
 export const MoviePage = (): JSX.Element => {
-  const { data: popularMoviesResponse, fetchNextPage } = usePopularMoviesInfiniteQuery();
+  const { data: popularMoviesResponse, fetchNextPage, isFetchingNextPage } = usePopularMoviesInfiniteQuery();
   const observer = useRef<IntersectionObserver | null>(null);
 
   const movies = popularMoviesResponse?.pages.flatMap((el) => el.results);
@@ -27,6 +28,7 @@ export const MoviePage = (): JSX.Element => {
         {movies?.map((movie, index) => <Movie movie={movie} key={`movie-${index}-page`} />)}
       </div>
       <div ref={handleIntersect} />
+      {isFetchingNextPage && <Loader />}
       <Footer />
     </div>
   );
