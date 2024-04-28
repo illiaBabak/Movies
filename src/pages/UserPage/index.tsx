@@ -18,6 +18,8 @@ export const UserPage = (): JSX.Element => {
   const [shouldEdit, setShouldEdit] = useState(false);
   const navigate = useNavigate();
 
+  const isValidCurrentUser = currentUser?.username && currentUser?.password;
+
   const handleInputFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
     if (!files) return;
@@ -52,6 +54,20 @@ export const UserPage = (): JSX.Element => {
         getPlacePredictions({ input: '' });
       }
     );
+  };
+
+  const saveData = () => {
+    setShouldEdit(false);
+
+    if (!currentUser) return;
+
+    setCurrentUserStorage(currentUser);
+
+    const updatedUsers = getUsers().filter((user) => user.id !== currentUser.id);
+
+    updatedUsers.push(currentUser);
+
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
   };
 
   return (
@@ -93,6 +109,9 @@ export const UserPage = (): JSX.Element => {
                   });
                 }}
                 value={currentUser?.username}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') saveData();
+                }}
               />
             </div>
           ) : (
@@ -118,6 +137,9 @@ export const UserPage = (): JSX.Element => {
                   });
                 }}
                 value={currentUser?.password}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') saveData();
+                }}
               />
             </div>
           )}
@@ -142,6 +164,9 @@ export const UserPage = (): JSX.Element => {
                   getPlacePredictions({ input: val });
                 }}
                 value={currentUser?.location}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') saveData();
+                }}
               />
               <div className='list'>
                 {placePredictions.map((el, index) => (
@@ -160,19 +185,8 @@ export const UserPage = (): JSX.Element => {
           <div className='container-btn-user'>
             {shouldEdit ? (
               <div
-                onClick={() => {
-                  setShouldEdit(false);
-
-                  if (!currentUser) return;
-
-                  setCurrentUserStorage(currentUser);
-
-                  const updatedUsers = getUsers().filter((user) => user.id !== currentUser.id);
-
-                  updatedUsers.push(currentUser);
-
-                  localStorage.setItem('users', JSON.stringify(updatedUsers));
-                }}
+                onClick={isValidCurrentUser ? () => saveData() : () => {}}
+                className={isValidCurrentUser ? '' : 'disabled'}
               >
                 Save
               </div>

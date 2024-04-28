@@ -165,7 +165,7 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
           </div>
         </div>
 
-        <div className={`create-btn ${!isFormValid ? 'disabled-btn' : ''}`} onClick={saveUser}>
+        <div className={`create-btn ${!isFormValid && 'disabled-btn'}`} onClick={saveUser}>
           Create user
         </div>
 

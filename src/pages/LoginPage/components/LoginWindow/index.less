@@ -52,12 +52,33 @@
       }
 
       .login-input-label {
-        .login-input {
-          width: 290px;
-          height: 22px;
-          border-radius: 10px;
-          border: 3px solid #474747;
-          cursor: pointer;
+        display: flex;
+        flex-direction: column;
+
+        .input-wrapper {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          position: relative;
+
+          .login-input {
+            width: 290px;
+            height: 22px;
+            border-radius: 10px;
+            border: 3px solid #474747;
+            cursor: pointer;
+          }
+
+          .input-icon {
+            width: 25px;
+            height: 25px;
+            border: 2px solid #474747;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            left: 100%;
+            cursor: pointer;
+          }
         }
       }
 

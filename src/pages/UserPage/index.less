@@ -138,6 +138,16 @@
             transition: 0.25s;
           }
         }
+
+        .disabled {
+          filter: grayscale(40%) blur(0.05px);
+
+          &:hover {
+            transition: 0;
+            transform: scale(1);
+          }
+          cursor: not-allowed;
+        }
       }
     }
   }

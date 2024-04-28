@@ -16,6 +16,7 @@ export const LoginWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
   });
   const [isFormValid, setIsFormValid] = useState(false);
   const [shouldShowAlert, setShouldShowAlert] = useState(false);
+  const [shouldShowPassword, setShouldShowPassword] = useState(false);
   const { setCurrentUser } = useContext(GlobalContext);
   const navigate = useNavigate();
 
@@ -63,22 +64,44 @@ export const LoginWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
 
             <div className='login-input-label'>
               <p>Username</p>
-              <input
-                type='text'
-                className='login-input'
-                onChange={(e) => handleInput(e.currentTarget.value, 'username')}
-                value={loginValues.username}
-              />
+
+              <div className='input-wrapper'>
+                <input
+                  type='text'
+                  className='login-input'
+                  onChange={(e) => handleInput(e.currentTarget.value, 'username')}
+                  value={loginValues.username}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') login();
+                  }}
+                />
+              </div>
             </div>
 
             <div className='login-input-label'>
               <p>Password</p>
-              <input
-                type='password'
-                className='login-input'
-                onChange={(e) => handleInput(e.currentTarget.value, 'password')}
-                value={loginValues.password}
-              />
+
+              <div className='input-wrapper'>
+                <input
+                  type={shouldShowPassword ? 'text' : 'password'}
+                  className='login-input'
+                  onChange={(e) => handleInput(e.currentTarget.value, 'password')}
+                  value={loginValues.password}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') login();
+                  }}
+                />
+                <img
+                  src={
+                    shouldShowPassword
+                      ? 'https://static.vecteezy.com/system/resources/thumbnails/006/086/018/small/preview-show-interface-icon-free-vector.jpg'
+                      : 'https://img.freepik.com/premium-vector/show-password-icon-eye-symbol-vector-vision-hide-from-watch-icon-secret-view-web-design-element_87543-11126.jpg'
+                  }
+                  alt='icon'
+                  className='input-icon'
+                  onClick={() => setShouldShowPassword((prev) => !prev)}
+                />
+              </div>
             </div>
 
             <div className={`submit-btn ${!isFormValid ? 'disabled-btn' : ''}`} onClick={login}>
