@@ -79,7 +79,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
           </div>
 
           <div className='movie-vote-row'>
-            <img className='movie-vote-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
+            <img className='movie-vote-img' src='https://www.iconpacks.net/icons/2/free-star-icon-2768-thumb.png' />
             <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
             <div
               className='add-list-btn'
@@ -95,7 +95,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
                 className='heart-icon'
                 src={
                   favouritesMovies.some((fav) => fav.id === movie.id)
-                    ? 'https://cdn-icons-png.freepik.com/256/9484/9484251.png?semt=ais_hybrid'
+                    ? 'https://www.denizfeyzan.com.tr/wp-content/uploads/2020/05/cropped-heart-icon.png'
                     : 'https://static-00.iconduck.com/assets.00/heart-icon-512x441-zviestnn.png'
                 }
               />

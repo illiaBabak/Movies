@@ -78,5 +78,33 @@
       line-height: 2.2;
       word-spacing: 0.3em;
     }
+
+    .info-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      outline: none;
+      width: 160px;
+      height: 30px;
+      font-size: 18px;
+      line-height: 20px;
+      font-weight: 500;
+      border-radius: 8px;
+      padding: 7px 12px;
+      border: none;
+      transition:
+        box-shadow 0.2s ease 0s,
+        -ms-transform 0.1s ease 0s,
+        -webkit-transform 0.1s ease 0s,
+        transform 0.1s ease 0s;
+      background: linear-gradient(to right, rgb(230, 30, 77) 0%, rgb(227, 28, 95) 50%, rgb(215, 4, 102) 100%);
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        transition: 0.25s;
+      }
+    }
   }
 }

@@ -49,7 +49,7 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
 
           <div className='vote-wrapper'>
             Vote:
-            <img className='movie-vote-img' src='https://pngfre.com/wp-content/uploads/star-png-image-pngfre-2.png' />
+            <img className='movie-vote-img' src='https://www.iconpacks.net/icons/2/free-star-icon-2768-thumb.png' />
             <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
           </div>
 

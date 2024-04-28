@@ -77,7 +77,7 @@ export const Header = (): JSX.Element => {
         </div>
       </div>
 
-      {shouldShowInfo && searchedMovie?.length && (
+      {!!(shouldShowInfo && searchedMovie?.length) && (
         <InfoWindow movie={searchedMovie[0]} setShouldShowInfo={setShouldShowInfo} />
       )}
     </>
