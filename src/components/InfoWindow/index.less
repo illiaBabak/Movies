@@ -11,6 +11,10 @@
   top: 50%;
   transform: translate(-50%, -50%);
   overflow: hidden;
+  animation-name: animateWrapper;
+  animation-fill-mode: forwards;
+  animation-duration: 0.7s;
+  opacity: 0;
   cursor: pointer;
 
   .movie-info {
@@ -24,6 +28,11 @@
     padding: 4px;
     position: relative;
     color: white;
+    opacity: 1;
+    transform: translate(0, 120%);
+    animation-name: animateContent;
+    animation-fill-mode: forwards;
+    animation-duration: 0.6s;
     cursor: auto;
 
     .background-img {
@@ -105,5 +114,25 @@
         transition: 0.25s;
       }
     }
+  }
+}
+
+@keyframes animateWrapper {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes animateContent {
+  from {
+    transform: translate(0, 120%);
+  }
+
+  to {
+    transform: translate(0, 0);
   }
 }
