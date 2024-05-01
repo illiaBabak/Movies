@@ -3,7 +3,6 @@ import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocomplet
 import { useNavigate } from 'react-router-dom';
 import { Alert } from 'src/components/Alert';
 import { GlobalContext } from 'src/root';
-import { apiKey } from 'src/utils/constants';
 import { getCurrentDate } from 'src/utils/getCurrentDate';
 import { getFavourites } from 'src/utils/getFavouritesMovies';
 import { getUsers } from 'src/utils/getUsers';
@@ -17,7 +16,7 @@ type Props = {
 
 export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element => {
   const { placesService, placePredictions, getPlacePredictions } = usePlacesService({
-    apiKey,
+    apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
   });
   const [location, setLocation] = useState('');
   const [inputValues, setInputValues] = useState({

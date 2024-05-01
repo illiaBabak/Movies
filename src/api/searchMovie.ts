@@ -2,6 +2,7 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr, isMovieType } from 'src/utils/guards';
+import { SEARCH_QUERY, SEARCH_URL } from './constants';
 
 type ResponseType = {
   results: MovieType[];
@@ -10,15 +11,14 @@ type ResponseType = {
 const searchMovie = async (query: string): Promise<MovieType[]> => {
   const options = {
     method: 'GET',
-    url: `  https://api.themoviedb.org/3/search/movie?query=${query}`,
+    url: `${SEARCH_URL}${query}`,
     params: {
       language: 'en-US',
       page: 1,
     },
     headers: {
       accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTJmNTE0MjRkN2M1MzhmYTVhNGEyOWY1YWE4MTAyMCIsInN1YiI6IjY0MTRmNjRlMGQ1ZDg1MDBiYTBlYWNkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KLlDEny0kvYG4dyIR8TOGf0dBj8cW5LZYHaIWwgmSdg',
+      Authorization: import.meta.env.VITE_MOVIE_API_KEY,
     },
   };
 
@@ -34,7 +34,7 @@ const searchMovie = async (query: string): Promise<MovieType[]> => {
 
 export const useSearchMovie = (query: string): UseQueryResult<MovieType[]> => {
   return useQuery({
-    queryKey: ['search_movie'],
+    queryKey: [SEARCH_QUERY],
     queryFn: async () => {
       return await searchMovie(query);
     },

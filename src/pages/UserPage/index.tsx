@@ -5,14 +5,13 @@ import { Header } from 'src/components/Header';
 import { GlobalContext } from 'src/root';
 import { getUsers } from 'src/utils/getUsers';
 import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
-import { apiKey } from 'src/utils/constants';
 import { parsePlaces } from 'src/utils/parsePlaces';
 import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 import { isString } from 'src/utils/guards';
 
 export const UserPage = (): JSX.Element => {
   const { placesService, placePredictions, getPlacePredictions } = usePlacesService({
-    apiKey,
+    apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
   });
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
   const [isPfp, setIsPfp] = useState(false);

@@ -2,6 +2,7 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { GenreType } from 'src/types/types';
 import { isGenreArr } from 'src/utils/guards';
+import { GENRES_QUERY, GENRES_URL } from './constants';
 
 type ResponseType = {
   genres: GenreType[];
@@ -9,14 +10,13 @@ type ResponseType = {
 
 const options = {
   method: 'GET',
-  url: 'https://api.themoviedb.org/3/genre/movie/list',
+  url: GENRES_URL,
   params: {
     language: 'en-US',
   },
   headers: {
     accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTJmNTE0MjRkN2M1MzhmYTVhNGEyOWY1YWE4MTAyMCIsInN1YiI6IjY0MTRmNjRlMGQ1ZDg1MDBiYTBlYWNkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KLlDEny0kvYG4dyIR8TOGf0dBj8cW5LZYHaIWwgmSdg',
+    Authorization: import.meta.env.VITE_MOVIE_API_KEY,
   },
 };
 
@@ -33,7 +33,7 @@ const fetchGenres = async (): Promise<GenreType[]> => {
 
 export const useGenresQuery = (): UseQueryResult<GenreType[]> => {
   return useQuery({
-    queryKey: ['genres'],
+    queryKey: [GENRES_QUERY],
     queryFn: async () => {
       return await fetchGenres();
     },

@@ -2,6 +2,7 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
+import { BASE_URL, TOP_RATED_QUERY } from './constants';
 
 type ResponseType = {
   results: MovieType[];
@@ -9,15 +10,14 @@ type ResponseType = {
 
 const options = {
   method: 'GET',
-  url: 'https://api.themoviedb.org/3/movie/top_rated',
+  url: `${BASE_URL}/top_rated`,
   params: {
     language: 'en-US',
     page: '1',
   },
   headers: {
     accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTJmNTE0MjRkN2M1MzhmYTVhNGEyOWY1YWE4MTAyMCIsInN1YiI6IjY0MTRmNjRlMGQ1ZDg1MDBiYTBlYWNkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KLlDEny0kvYG4dyIR8TOGf0dBj8cW5LZYHaIWwgmSdg',
+    Authorization: import.meta.env.VITE_MOVIE_API_KEY,
   },
 };
 
@@ -33,7 +33,7 @@ const fetchTopRated = async (): Promise<MovieType[]> => {
 
 export const useTopRatedMoviesQuery = (): UseQueryResult<MovieType[]> => {
   return useQuery({
-    queryKey: ['top_rated_movies'],
+    queryKey: [TOP_RATED_QUERY],
     queryFn: async () => {
       return await fetchTopRated();
     },

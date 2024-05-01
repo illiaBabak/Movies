@@ -2,6 +2,7 @@ import { UseInfiniteQueryResult, useInfiniteQuery } from '@tanstack/react-query'
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
+import { BASE_URL, POPULARS_QUERY } from './constants';
 
 type RequestType = {
   results: MovieType[];
@@ -14,15 +15,14 @@ type ResponseType = {
 const fetchPopular = async (pageNumber: number): Promise<ResponseType> => {
   const options = {
     method: 'GET',
-    url: 'https://api.themoviedb.org/3/movie/popular',
+    url: `${BASE_URL}/popular`,
     params: {
       language: 'en-US',
       page: pageNumber,
     },
     headers: {
       accept: 'application/json',
-      Authorization:
-        'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTJmNTE0MjRkN2M1MzhmYTVhNGEyOWY1YWE4MTAyMCIsInN1YiI6IjY0MTRmNjRlMGQ1ZDg1MDBiYTBlYWNkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KLlDEny0kvYG4dyIR8TOGf0dBj8cW5LZYHaIWwgmSdg',
+      Authorization: import.meta.env.VITE_MOVIE_API_KEY,
     },
   };
 
@@ -42,7 +42,7 @@ export const usePopularMoviesInfiniteQuery = (): UseInfiniteQueryResult<
   Error
 > => {
   return useInfiniteQuery({
-    queryKey: ['popular_movies'],
+    queryKey: [POPULARS_QUERY],
     queryFn: async ({ pageParam }) => {
       return await fetchPopular(pageParam);
     },

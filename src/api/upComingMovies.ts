@@ -2,6 +2,7 @@ import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { MovieType } from 'src/types/types';
 import { isMovieArr } from 'src/utils/guards';
+import { BASE_URL, UP_COMING_QUERY } from './constants';
 
 type ResponseType = {
   results: MovieType[];
@@ -13,15 +14,14 @@ type ResponseType = {
 
 const options = {
   method: 'GET',
-  url: 'https://api.themoviedb.org/3/movie/upcoming',
+  url: `${BASE_URL}/upcoming`,
   params: {
     language: 'en-US',
     page: '1',
   },
   headers: {
     accept: 'application/json',
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzOTJmNTE0MjRkN2M1MzhmYTVhNGEyOWY1YWE4MTAyMCIsInN1YiI6IjY0MTRmNjRlMGQ1ZDg1MDBiYTBlYWNkZCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KLlDEny0kvYG4dyIR8TOGf0dBj8cW5LZYHaIWwgmSdg',
+    Authorization: import.meta.env.VITE_MOVIE_API_KEY,
   },
 };
 
@@ -46,7 +46,7 @@ const fetchUpcoming = async (): Promise<MovieType[]> => {
 
 export const useUpComingMoviesQuery = (): UseQueryResult<MovieType[]> => {
   return useQuery({
-    queryKey: ['up_coming_movies'],
+    queryKey: [UP_COMING_QUERY],
     queryFn: async () => {
       return await fetchUpcoming();
     },

@@ -28,3 +28,4 @@ build
 tsconfig.json
 tsconfig.node.json
 key.ts
+*.env
