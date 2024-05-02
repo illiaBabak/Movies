@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import { useGenresQuery } from 'src/api/genres';
 import { HomePage } from 'src/pages/HomePage';
@@ -26,6 +26,10 @@ export const GlobalContext = createContext<GlobalContextType>({
 export const App = (): JSX.Element => {
   const { data: genres } = useGenresQuery();
   const [currentUser, setCurrentUser] = useState<UserData | null>(getCurrentUser());
+
+  useEffect(() => {
+    sessionStorage.setItem('current-user', JSON.stringify(currentUser));
+  }, [currentUser]);
 
   return (
     <GlobalContext.Provider value={{ currentUser, genres, setCurrentUser }}>

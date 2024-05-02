@@ -36,6 +36,7 @@ export const Movie = ({ movie }: Props): JSX.Element => {
     setFavouritesMovies(favouritesCurrentUser.movies);
 
     const updatedFavourites = favourites.filter((favourite) => favourite.userId !== favouritesCurrentUser.userId);
+
     localStorage.setItem('favourites', JSON.stringify([...updatedFavourites, favouritesCurrentUser]));
   };
 

@@ -6,7 +6,6 @@ import { GlobalContext } from 'src/root';
 import { getUsers } from 'src/utils/getUsers';
 import usePlacesService from 'react-google-autocomplete/lib/usePlacesAutocompleteService';
 import { parsePlaces } from 'src/utils/parsePlaces';
-import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 import { isString } from 'src/utils/guards';
 
 export const UserPage = (): JSX.Element => {
@@ -30,6 +29,7 @@ export const UserPage = (): JSX.Element => {
       if (isString(base64Image)) {
         setCurrentUser((prev) => {
           if (!prev) return prev;
+
           return {
             ...prev,
             profilePicture: base64Image,
@@ -69,7 +69,7 @@ export const UserPage = (): JSX.Element => {
 
     if (!currentUser) return;
 
-    setCurrentUserStorage(currentUser);
+    setCurrentUser(currentUser);
 
     const updatedUsers = getUsers().filter((user) => user.id !== currentUser.id);
 
@@ -205,7 +205,6 @@ export const UserPage = (): JSX.Element => {
             <div
               onClick={() => {
                 setCurrentUser(null);
-                setCurrentUserStorage('');
                 navigate('/home');
               }}
             >

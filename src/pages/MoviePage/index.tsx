@@ -27,8 +27,8 @@ export const MoviePage = (): JSX.Element => {
       <div className='movie-list'>
         {movies?.map((movie, index) => <Movie movie={movie} key={`movie-${index}-page`} />)}
       </div>
-      <div ref={handleIntersect} />
-      {isFetchingNextPage && <Loader />}
+
+      {isFetchingNextPage ? <Loader /> : <div ref={handleIntersect} />}
       <Footer />
     </div>
   );

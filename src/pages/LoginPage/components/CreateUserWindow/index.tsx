@@ -8,7 +8,6 @@ import { getFavourites } from 'src/utils/getFavouritesMovies';
 import { getUsers } from 'src/utils/getUsers';
 import { isString } from 'src/utils/guards';
 import { parsePlaces } from 'src/utils/parsePlaces';
-import { setCurrentUserStorage } from 'src/utils/setCurrentUserStorage';
 
 type Props = {
   setShouldCreateUser: React.Dispatch<React.SetStateAction<boolean>>;
@@ -98,7 +97,6 @@ export const CreateUserWindow = ({ setShouldCreateUser }: Props): JSX.Element =>
 
     localStorage.setItem('favourites', JSON.stringify([...favourites, { movies: [], userId: userInfo.id }]));
     localStorage.setItem('users', JSON.stringify([...users, userInfo]));
-    setCurrentUserStorage(userInfo);
 
     clearWindow();
 
