@@ -3,7 +3,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - 16px);
+  width: calc(100vw - 42px);
   height: 105px;
   padding: 8px;
   color: white;
@@ -25,8 +25,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 40%;
-    margin-right: 48px;
 
     .search {
       display: flex;
@@ -34,7 +32,7 @@
       align-items: center;
 
       .header-search {
-        width: 190px;
+        width: 210px;
         height: 18px;
         padding: 2px;
         background-color: transparent;
@@ -63,10 +61,99 @@
     .movies-btn,
     .user-btn,
     .home-btn {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      min-width: 60px;
+      max-width: 60px;
+      margin: 8px;
+
       &:hover {
         transform: scale(1.05);
         transition: 0.25s;
       }
+    }
+  }
+}
+
+@media only screen and (max-width: 750px) {
+  .header {
+    .title {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .header-list {
+      .search {
+        .header-search {
+          width: 100px;
+          height: 16px;
+        }
+
+        .search-img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+
+      .list-btn,
+      .movies-btn,
+      .user-btn,
+      .home-btn {
+        margin: 4px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 535px) {
+  .header {
+    flex-direction: column;
+    justify-content: center;
+
+    .header-list {
+      margin-top: 12px;
+    }
+  }
+}
+
+@media only screen and (max-width: 420px) {
+  .header {
+    .title {
+      font-size: 16px;
+    }
+
+    .header-list {
+      .search {
+        .header-search {
+          width: 50px;
+          height: 14px;
+        }
+
+        .search-img {
+          width: 22px;
+          height: 22px;
+        }
+      }
+
+      .list-btn,
+      .movies-btn,
+      .user-btn,
+      .home-btn {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .header {
+    flex-direction: row;
+    justify-content: space-around;
+
+    .header-list {
+      flex-direction: column;
     }
   }
 }

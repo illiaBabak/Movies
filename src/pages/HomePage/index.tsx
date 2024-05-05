@@ -7,6 +7,13 @@ import { useTopRatedMoviesQuery } from 'src/api/topRatedMovies';
 import { useUpComingMoviesQuery } from 'src/api/upComingMovies';
 import { usePopularMoviesInfiniteQuery } from 'src/api/popularMovies';
 
+const DEFAULT_CARD_WIDTH = 202;
+
+const COUNT_CARDS =
+  Math.floor(window.innerWidth / DEFAULT_CARD_WIDTH) - 1 === 0
+    ? 1
+    : Math.floor(window.innerWidth / DEFAULT_CARD_WIDTH) - 1;
+
 export const HomePage = (): JSX.Element => {
   const { data: popularMoviesResponse, isLoading: isLoadingPopularMovies } = usePopularMoviesInfiniteQuery();
   const { data: topRatedMovies, isLoading: isLoadingRatedMovies } = useTopRatedMoviesQuery();
@@ -20,9 +27,9 @@ export const HomePage = (): JSX.Element => {
     <div className='home-page'>
       <Header />
       {popularMovies?.length && <PreviewMovie movie={popularMovies[0]} />}
-      {popularMovies?.length && <Section title='Popular films' movies={popularMovies.slice(0, 6)} />}
-      {topRatedMovies?.length && <Section title='Top rated films' movies={topRatedMovies.slice(0, 6)} />}
-      {upcomingMovies?.length && <Section title='Upcoming films' movies={upcomingMovies.slice(0, 6)} />}
+      {popularMovies?.length && <Section title='Popular films' movies={popularMovies.slice(0, COUNT_CARDS)} />}
+      {topRatedMovies?.length && <Section title='Top rated films' movies={topRatedMovies.slice(0, COUNT_CARDS)} />}
+      {upcomingMovies?.length && <Section title='Upcoming films' movies={upcomingMovies.slice(0, COUNT_CARDS)} />}
       {isLoading && <Loader />}
       <Footer />
     </div>

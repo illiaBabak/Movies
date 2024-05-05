@@ -113,7 +113,13 @@ export const Movie = ({ movie }: Props): JSX.Element => {
             </div>
           </div>
 
-          <div onClick={() => setShouldShowInfo(true)} className='info-btn'>
+          <div
+            onClick={() => {
+              document.body.style.overflow = 'hidden';
+              setShouldShowInfo(true);
+            }}
+            className='info-btn'
+          >
             Info
           </div>
         </div>

@@ -47,8 +47,8 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
         </div>
 
         <div className='right-col'>
-          <h2>Title: {movie.original_title}</h2>
-          <p>Release date: {formatDateToWords(movie.release_date)}</p>
+          <h2 className='info-title'>Title: {movie.original_title}</h2>
+          <p className='release-text'>Release date: {formatDateToWords(movie.release_date)}</p>
           <div className='genres-list'>
             <p>Genres: </p>
             {movie.genre_ids.map((id, index) => {
@@ -69,13 +69,19 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
             <p className='movie-vote'>{roundVote(movie.vote_average)}</p>
           </div>
 
-          <p>Adult: {movie.adult ? 'adult' : 'not an adult'}</p>
-          <p>Original language: {movie.original_language}</p>
-          <p>Popularity: {movie.popularity}</p>
+          <p className='info-text'>Adult: {movie.adult ? 'adult' : 'not an adult'}</p>
+          <p className='info-text'>Original language: {movie.original_language}</p>
+          <p className='info-text'>Popularity: {movie.popularity}</p>
           <p className='overview'>{movie.overview}</p>
         </div>
 
-        <div className='close-btn' onClick={() => setShouldShowInfo(false)}>
+        <div
+          className='close-btn'
+          onClick={() => {
+            document.body.style.overflow = '';
+            setShouldShowInfo(false);
+          }}
+        >
           x
         </div>
       </div>
