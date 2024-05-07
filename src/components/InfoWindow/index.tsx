@@ -14,7 +14,13 @@ export const InfoWindow = ({ movie, setShouldShowInfo }: Props): JSX.Element => 
   const [isLoadingIcon, setIsLoadingIcon] = useState(true);
 
   return (
-    <div className='movie-info-wrapper' onClick={() => setShouldShowInfo(false)}>
+    <div
+      className='movie-info-wrapper'
+      onClick={() => {
+        setShouldShowInfo(false);
+        document.body.style.overflow = '';
+      }}
+    >
       <div
         className='movie-info'
         onClick={(e) => {
