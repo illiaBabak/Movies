@@ -15,11 +15,17 @@ const COUNT_CARDS =
     : Math.floor(window.innerWidth / DEFAULT_CARD_WIDTH) - 1;
 
 export const HomePage = (): JSX.Element => {
-  const { data: popularMoviesResponse, isLoading: isLoadingPopularMovies } = usePopularMoviesInfiniteQuery();
+  const {
+    data: popularMoviesResponse,
+    isLoading: isLoadingPopularMovies,
+    fetchNextPage,
+  } = usePopularMoviesInfiniteQuery();
   const { data: topRatedMovies, isLoading: isLoadingRatedMovies } = useTopRatedMoviesQuery();
   const { data: upcomingMovies, isLoading: isLoadingUpComingMovies } = useUpComingMoviesQuery();
 
   const popularMovies = popularMoviesResponse?.pages.flatMap((el) => el.results);
+
+  if (!popularMovies?.length) fetchNextPage();
 
   const isLoading = isLoadingPopularMovies || isLoadingRatedMovies || isLoadingUpComingMovies;
 
