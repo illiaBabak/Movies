@@ -79,6 +79,29 @@
         font-size: 18px;
         font-weight: bolder;
       }
+
+      .add-list-btn {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 35px;
+        height: 35px;
+        padding: 2px;
+        margin: 4px;
+        cursor: pointer;
+
+        &:hover {
+          transform: scale(1.05);
+          transition: 0.25s;
+        }
+
+        .heart-icon {
+          width: 35px;
+          height: 35px;
+          object-fit: contain;
+        }
+      }
     }
 
     .preview-overview {
@@ -140,6 +163,16 @@
           .vote-star-img {
             width: 22px;
             height: 22px;
+          }
+
+          .add-list-btn {
+            width: 22px;
+            height: 22px;
+
+            .heart-icon {
+              width: 22px;
+              height: 22px;
+            }
           }
 
           .vote {

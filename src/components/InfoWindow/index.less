@@ -88,6 +88,29 @@
           height: 30px;
           object-fit: contain;
         }
+
+        .add-list-btn {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 30px;
+          height: 30px;
+          padding: 2px;
+          margin: 4px;
+          cursor: pointer;
+
+          &:hover {
+            transform: scale(1.05);
+            transition: 0.25s;
+          }
+
+          .heart-icon {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+          }
+        }
       }
 
       .overview {
@@ -163,6 +186,16 @@
           .movie-vote-img {
             width: 16px;
             height: 16px;
+          }
+
+          .add-list-btn {
+            width: 16px;
+            height: 16px;
+
+            .heart-icon {
+              width: 16px;
+              height: 16px;
+            }
           }
         }
       }
