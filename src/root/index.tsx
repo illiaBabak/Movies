@@ -38,7 +38,7 @@ export const App = (): JSX.Element => {
           <Routes>
             <Route path='/*' element={<Navigate to='/home' />} />
             <Route path='/home' element={<HomePage />} />
-            <Route path='/movies' element={<MoviePage />} />
+            <Route path='/popular' element={<MoviePage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/user' element={<UserPage />} />
             <Route path='/my-list' element={<MyListPage />} />
