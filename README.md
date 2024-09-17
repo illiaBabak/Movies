@@ -10,6 +10,8 @@ This project was written in React using TypeScript, Vite and React Query
 <img src="https://static-00.iconduck.com/assets.00/typescript-icon-icon-1024x1024-vh3pfez8.png" alt="TypeScript" width="75" height="75" style="object-fit: cover;">
 <img src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/less-512.png" alt="Less" width="90" height="90" style="object-fit: cover;">
 
+During 02.02.2024-05.06.2024
+
 # Movies
 
 This web application is written to learn how to work with TMDB Api and how to work deeply with React Query, Less.
